@@ -4,7 +4,7 @@ from graphene_django import DjangoObjectType
 from graphene_django_extras import DjangoListObjectType, \
     DjangoInputObjectType, \
     LimitOffsetGraphqlPagination, \
-    DjangoFilterPaginateListField
+    DjangoFilterPaginateListField, DjangoListObjectField
 
 
 class UserType(DjangoObjectType):
@@ -65,7 +65,7 @@ class UserMutation(graphene.Mutation):
 
 
 class Query(graphene.ObjectType):
-    # all_users = DjangoListObjectField(UserListType, description='All Users query')
+    all_users = DjangoListObjectField(UserListType, description='All Users query')
     all_users1 = DjangoFilterPaginateListField(UserType, pagination=LimitOffsetGraphqlPagination())
 
 
