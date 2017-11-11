@@ -13,9 +13,13 @@ def batch():
     )
 
 
+@pytest.fixture(scope='module')
+def client():
+    return Client(schema)
+
+
 @pytest.mark.django_db()
-def test_DjangoListObjectField(batch):
-    client = Client(schema)
+def test_DjangoListObjectField(batch, client):
     executed = client.execute("""{
       allUsers {
         results(limit:5, offset:5){
@@ -37,8 +41,7 @@ def test_DjangoListObjectField(batch):
     ['Doe', 5],
     ['Wayne', 1],
 ])
-def test_DjangoFilterPaginateListField(batch, last_name, count):
-    client = Client(schema)
+def test_DjangoFilterPaginateListField(batch, client, last_name, count):
     executed = client.execute("""{
       allUsers1(lastName_Iexact:"%s", limit:5, offset:0){
         username
